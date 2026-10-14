@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Products collection
+    match /products/{productId} {
+      // Anyone can read products (public catalogue)
+      allow read: if true;
+
+      // Only authenticated users can create, update, or delete products
+      allow create: if request.auth != null;
+      allow update: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+  }
+}
